@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Trinity Café</title>
+    <meta name=og:title content="Trinity Café Picrew">
+    <meta name=og:description content="if you know you know">
+    <meta name=og:type content=website>
+    <meta name=og:image content=https://media.discordapp.net/attachments/1089207100611252358/1138197769719390398/IMG_1955.png>
+    <meta name=og:image:secure_url content=https://media.discordapp.net/attachments/1089207100611252358/1138197769719390398/IMG_1955.png>
+    <meta name=og:image:alt content="Pyra">
+    <meta name=og:url content=https://ygg2.github.io/cafe/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+      [v-cloak]   { display: none; }
+      .box {
+        padding: 0;
+        overflow: hidden;
+        flex-basis: 100%;
+        line-height: 0;
+      }
+      .cover-tile {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main id="app" v-cloak>
+
+      <section class="section">
+        <h1 class="title is-4">The Trinity Processor but it's a modern café AU made with dress-up games</h1>
+        <p class="pb-4">Filter by name</p>
+        <div class="buttons">
+          <button
+            v-for="tag of tags"
+            class="button is-primary"
+            :class="{'is-light': !selected[tag]}"
+            @click="filterBy(tag)"
+          >
+            {{ tag }}
+          </button>
+        </div>
+      </section>
+
+      <div class="columns is-multiline">
+        <div v-for="image of selectedImages" class="column is-3 is-3-desktop is-4-tablet">
+          <a class="box image is-square" :href="image.url">
+            <img :src="image.url" class="cover-tile">
+          </a>
+          <a class="tag ml-4" :href="image.source.link">Source: {{ image.source.name }}</a>
+        </div>
+      </div>
+
+    </main>
+
+    <script type="module">
+      import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+      const tag = {}
+      let keywords = ['pyra', 'mythra', 'malos', 'alvis']
+      for (let keyword of keywords) {
+        tag[keyword] = keyword
+      }
+      const source = {
+        pastelgirl: {
+          name: 'Pastel Girl',
+          link: 'https://play.google.com/store/apps/details?id=com.seyeonsoft.pastel'
+        },
+        pastelfriends: {
+          name: 'Pastel Friends',
+          link: 'https://play.google.com/store/apps/details?id=com.seyeonsoft.friends'
+        },
+        picrew1904634: {
+          name: 'Picrew 1904634',
+          link: 'https://picrew.me/ja/image_maker/1904634'
+        },
+        picrew185483: {
+          name: 'Picrew 185483',
+          link: 'https://picrew.me/ja/image_maker/185483'
+        },
+        picrew11534: {
+          name: 'Picrew 11534',
+          link: 'https://picrew.me/ja/image_maker/11534'
+        },
+        picrew1387003: {
+          name: 'Picrew 1387003',
+          link: 'https://picrew.me/ja/image_maker/1387003'
+        },
+        picrew165901: {
+          name: 'Picrew 165901',
+          link: 'https://picrew.me/ja/image_maker/165901'
+        },
+        picrew1011016: {
+          name: 'Picrew 1011016',
+          link: 'https://picrew.me/ja/image_maker/1011016'
+        }
+      }
+
+      createApp({
+        data() {
+          return {
+            tags: keywords,
+            selected: {},
+            selectedImages: [],
+            images: [
+              {
+                url: 'https://media.discordapp.net/attachments/1089207100611252358/1138197769719390398/IMG_1955.png',
+                tags: [tag.pyra],
+                source: source.picrew1904634
+              },
+              {
+                url: 'https://media.discordapp.net/attachments/1089207100611252358/1138197770176581632/IMG_1956.png',
+                tags: [tag.mythra],
+                source: source.picrew1904634
+              },
+              {
+                url: 'https://media.discordapp.net/attachments/1089207100611252358/1138197770470178908/IMG_1953.png',
+                tags: [tag.malos],
+                source: source.picrew1904634
+              },
+              {
+                url: 'https://media.discordapp.net/attachments/1089207100611252358/1138197770751189042/IMG_1959.png',
+                tags: [tag.alvis],
+                source: source.picrew1904634
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1136723186067705856/20230730170036.png',
+                tags: [tag.pyra],
+                source: source.pastelgirl
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1136723186571038750/20230730171135.png',
+                tags: [tag.mythra],
+                source: source.pastelgirl
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1138556021535670422/20230802220759.png',
+                tags: [tag.pyra, tag.mythra, tag.malos, tag.alvis],
+                source: source.pastelfriends
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139304576827281408/20230802224959.png',
+                tags: [tag.alvis],
+                source: source.pastelfriends
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1139277104337391616/IMG_1968.png',
+                tags: [tag.mythra],
+                source: source.picrew185483
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139303840525602847/IMG_2005.png',
+                tags: [tag.malos],
+                source: source.picrew11534
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1139276864096051210/IMG_2002.png',
+                tags: [tag.pyra],
+                source: source.picrew1387003
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1139276864452579328/IMG_2004.png',
+                tags: [tag.mythra],
+                source: source.picrew1387003
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139303839913214104/IMG_1991.png',
+                tags: [tag.alvis],
+                source: source.picrew165901
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1139276891837186241/IMG_1980.png',
+                tags: [tag.pyra, tag.mythra],
+                source: source.picrew165901
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/621770401604698123/1139277939419140156/IMG_1993.png',
+                tags: [tag.alvis],
+                source: source.picrew1011016
+              }
+            ]
+          }
+        },
+        created() {
+          this.selectedImages = this.images
+          for (let tag of this.tags) {
+            this.selected[tag] = false
+          }
+        },
+        methods: {
+          refresh() {
+            this.selectedImages = this.images.filter(image => {
+              for (let tag of image.tags) {
+                if (this.selected[tag]) {
+                  return true
+                }
+              }
+              return false
+            })
+            if (this.selectedImages.length == 0) {
+              this.selectedImages = this.images
+            }
+          },
+          filterBy(tag) {
+            this.selected[tag] = !this.selected[tag]
+            this.refresh()
+          }
+        }
+      }).mount('#app')
+    </script>
+  </body>
+</html>
