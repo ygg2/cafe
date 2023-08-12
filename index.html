@@ -33,17 +33,47 @@
 
       <section class="section">
         <h1 class="title is-4">The Trinity Processor but it's a modern café AU made with dress-up games</h1>
-        <p class="pb-4">Filter by name</p>
-        <div class="buttons">
-          <button
-            v-for="tag of tags"
-            class="button is-primary"
-            :class="{'is-light': !selected[tag]}"
-            @click="filterBy(tag)"
-          >
-            {{ tag }}
-          </button>
+
+        <div class="columns">
+          <div class="column is-narrow">
+            <p class="pb-4">Filter by name</p>
+            <div class="buttons">
+              <button
+                v-for="tag of tags"
+                class="button is-primary"
+                :class="{'is-light': !selected[tag]}"
+                @click="filterBy(tag)"
+              >
+                {{ tag }}
+              </button>
+            </div>
+          </div>
+
+          <div class="column is-narrow">
+            <p class="pb-4"> Filter by core</p>
+            <div class="buttons">
+              <button
+                class="button is-danger is-light"
+                @click="setFilters('alvis')"
+              >
+                Ontos
+              </button>
+              <button
+                class="button is-success is-light"
+                @click="setFilters('pyra', 'mythra')"
+              >
+                Pneuma
+              </button>
+              <button
+                class="button is-link is-light"
+                @click="setFilters('malos')"
+              >
+                Logos
+              </button>
+            </div>
+          </div>
         </div>
+
       </section>
 
       <div class="columns is-multiline">
@@ -97,6 +127,18 @@
         picrew1011016: {
           name: 'Picrew 1011016',
           link: 'https://picrew.me/ja/image_maker/1011016'
+        },
+        picrew58190: {
+          name: 'Picrew 58190',
+          link: 'https://picrew.me/ja/image_maker/58190'
+        },
+        picrew1195520: {
+          name: 'Picrew 1195520',
+          link: 'https://picrew.me/ja/image_maker/1195520'
+        },
+        picrew1656364: {
+          name: 'Picrew 1656364',
+          link: 'https://picrew.me/ja/image_maker/1656364'
         }
       }
 
@@ -181,6 +223,46 @@
                 url: 'https://cdn.discordapp.com/attachments/621770401604698123/1139277939419140156/IMG_1993.png',
                 tags: [tag.alvis],
                 source: source.picrew1011016
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139723615378608210/58190_pyra.png',
+                tags: [tag.pyra],
+                source: source.picrew58190
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139723615080824932/58190_mythra.png',
+                tags: [tag.mythra],
+                source: source.picrew58190
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139723614703321168/58190_malos.png',
+                tags: [tag.malos],
+                source: source.picrew58190
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139723614325837894/58190_a.png',
+                tags: [tag.alvis],
+                source: source.picrew58190
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139668499938148412/IMG_2011.png',
+                tags: [tag.pyra],
+                source: source.picrew1195520
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139668499657134262/IMG_2012.png',
+                tags: [tag.mythra],
+                source: source.picrew1195520
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139668500248531115/IMG_2010.png',
+                tags: [tag.pyra, tag.mythra],
+                source: source.picrew1656364
+              },
+              {
+                url: 'https://cdn.discordapp.com/attachments/747639048431992932/1139668499304820886/IMG_2015.png',
+                tags: [tag.alvis],
+                source: source.picrew1656364
               }
             ]
           }
@@ -207,6 +289,16 @@
           },
           filterBy(tag) {
             this.selected[tag] = !this.selected[tag]
+            this.refresh()
+          },
+          setFilters(...tags) {
+            for (let tag of this.tags) {
+              if (tags.includes(tag)) {
+                this.selected[tag] = true
+              } else {
+                this.selected[tag] = false
+              }
+            }
             this.refresh()
           }
         }
