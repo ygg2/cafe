@@ -12,6 +12,7 @@
     <meta name=og:image:alt content="Pyra">
     <meta name=og:url content=https://ygg2.github.io/cafe/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
     <style>
       [v-cloak]   { display: none; }
       .box {
@@ -25,67 +26,110 @@
         height: 100%;
         object-fit: cover;
       }
+      .dark {
+        background-color: hsl(0, 0%, 29%); /* has-background-grey-dark */
+        color: hsl(0, 0%, 96%); /* has-text-light */
+      }
+      .dark .title {
+        color: hsl(0, 0%, 96%); /* has-text-light */
+      }
+      .button.is-primary.is-outlined:focus {
+        background-color: transparent;
+      }
     </style>
   </head>
 
   <body>
-    <main id="app" v-cloak>
+    <div id="app" v-cloak>
+      <main :class="{ dark: dark }">
 
-      <section class="section">
-        <h1 class="title is-4">The Trinity Processor but it's a modern café AU made with dress-up games</h1>
-
-        <div class="columns">
-          <div class="column is-narrow">
-            <p class="pb-4">Filter by name</p>
-            <div class="buttons">
+        <section class="section">
+          <div class="columns is-mobile">
+            <div class="column">
+              <h1 class="title is-4">The Trinity Processor but it's a modern café AU made with dress-up games</h1>
+            </div>
+            <div class="column is-narrow">
               <button
-                v-for="tag of tags"
-                class="button is-primary"
-                :class="{'is-light': !selected[tag]}"
-                @click="filterBy(tag)"
+                class="button"
+                :class="{ 'is-light': !dark, 'is-dark': dark }"
+                @click="toggleTheme"
               >
-                {{ tag }}
+                <span class="icon">
+                  <i class="mdi mdi-24px mdi-theme-light-dark"></i>
+                </span>
               </button>
             </div>
           </div>
 
-          <div class="column is-narrow">
-            <p class="pb-4"> Filter by core</p>
-            <div class="buttons">
-              <button
-                class="button is-danger is-light"
-                @click="setFilters('alvis')"
-              >
-                Ontos
-              </button>
-              <button
-                class="button is-success is-light"
-                @click="setFilters('pyra', 'mythra')"
-              >
-                Pneuma
-              </button>
-              <button
-                class="button is-link is-light"
-                @click="setFilters('malos')"
-              >
-                Logos
-              </button>
+          <div class="columns">
+
+            <div class="column is-narrow">
+              <p class="pb-4">Filter by name</p>
+              <div class="buttons">
+                <button
+                  v-for="tag of tags"
+                  class="button is-primary"
+                  :class="{ 'is-light': !selected[tag] && !dark, 'is-outlined': !selected[tag] && dark }"
+                  @click="filterBy(tag)"
+                  :key="tag"
+                >
+                  {{ tag }}
+                </button>
+              </div>
             </div>
+
+            <div class="column is-narrow">
+              <p class="pb-4"> Filter by core</p>
+              <div class="buttons">
+                <button
+                  class="button is-danger"
+                  :class="{ 'is-light': !dark, 'is-outlined': dark }"
+                  @click="setFilters('alvis')"
+                >
+                  Ontos
+                </button>
+                <button
+                  class="button is-success"
+                  :class="{ 'is-light': !dark, 'is-outlined': dark }"
+                  @click="setFilters('pyra', 'mythra')"
+                >
+                  Pneuma
+                </button>
+                <button
+                  class="button is-link"
+                  :class="{ 'is-light': !dark, 'is-outlined': dark }"
+                  @click="setFilters('malos')"
+                >
+                  Logos
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <div class="columns is-mobile is-multiline">
+          <div
+            v-for="image of selectedImages"
+            class="column is-3-widescreen is-3-desktop is-4-tablet is-6-mobile"
+            :key="image.url"
+          >
+            <a class="box image is-square" :href="image.url">
+              <img :src="image.url" class="cover-tile">
+            </a>
+            <a
+              class="tag ml-4"
+              :class="{ 'is-dark': dark }"
+              :href="image.source.link"
+            >
+              Source: {{ image.source.name }}
+            </a>
           </div>
         </div>
 
-      </section>
-
-      <div class="columns is-multiline">
-        <div v-for="image of selectedImages" class="column is-3 is-3-desktop is-4-tablet">
-          <a class="box image is-square" :href="image.url">
-            <img :src="image.url" class="cover-tile">
-          </a>
-          <a class="tag ml-4" :href="image.source.link">Source: {{ image.source.name }}</a>
-        </div>
-      </div>
-
-    </main>
+      </main>
+    </div>
 
     <script type="module">
       import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
@@ -153,6 +197,7 @@
       createApp({
         data() {
           return {
+            dark: false,
             tags: keywords,
             selected: {},
             selectedImages: [],
@@ -297,6 +342,9 @@
           }
         },
         methods: {
+          toggleTheme() {
+            this.dark = !this.dark
+          },
           refresh() {
             this.selectedImages = this.images.filter(image => {
               for (let tag of image.tags) {
